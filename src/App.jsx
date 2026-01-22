@@ -191,7 +191,7 @@ function App() {
 
   const generateWithGemini = async () => {
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const model = genAI.getGenerativeModel({ model: import.meta.env.VITE_GEMINI_MODEL || 'gemini-2.0-flash' });
 
     const prompt = `Create a ${days} day travel itinerary for ${destination}. 
     
@@ -245,7 +245,7 @@ function App() {
       scrollToResults();
     } catch (err) {
       console.error('Generation error:', err);
-      setError('Could not generate plan. Please try again.');
+      setError(`Could not generate plan. (${err.message || 'Unknown error'})`);
     } finally {
       setIsLoading(false);
     }
